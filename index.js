@@ -35,11 +35,36 @@ async function run() {
 
     const usersCollection = db.collection("users");
 
+    // food collection
+
+    const famousFoodCollection = db.collection("famous_food");
+
+    // create user
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       user.role = "user";
       user.createAt = new Date();
       const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    //famous food get
+
+    app.get("/famous_food", async (req, res) => {
+      const result = await famousFoodCollection.find().toArray();
+      res.send(result);
+    });
+
+    // load a specific Food
+
+    app.get("/famous_food/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: new ObjectId(id) };
+
+      const result = await famousFoodCollection.findOne(query);
+
       res.send(result);
     });
 
