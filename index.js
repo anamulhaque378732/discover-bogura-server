@@ -39,6 +39,13 @@ async function run() {
 
     const famousFoodCollection = db.collection("famous_food");
 
+    // famous people collection
+
+    const famousPeopleCollection = db.collection("famous_people");
+
+    // tourist Place collection
+    const touristPlaceCollection = db.collection("tourist_place");
+
     // create user
 
     app.post("/users", async (req, res) => {
@@ -46,6 +53,40 @@ async function run() {
       user.role = "user";
       user.createAt = new Date();
       const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // tourist place get
+
+    app.get("/tourist_place", async (req, res) => {
+      const result = await touristPlaceCollection.find().toArray();
+      res.send(result);
+    });
+
+    // specific tourist place get
+
+    app.get("/tourist_place/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await touristPlaceCollection.findOne(query);
+      res.send(result);
+    });
+
+    // famous people get
+
+    app.get("/famous_people", async (req, res) => {
+      const result = await famousPeopleCollection.find().toArray();
+      res.send(result);
+    });
+
+    // famous people load by specific id
+
+    app.get("/famous_people/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await famousPeopleCollection.findOne(query);
       res.send(result);
     });
 
