@@ -44,7 +44,10 @@ async function run() {
     const famousPeopleCollection = db.collection("famous_people");
 
     // tourist Place collection
+
     const touristPlaceCollection = db.collection("tourist_place");
+
+    const riversCollection = db.collection("rivers");
 
     // create user
 
@@ -73,6 +76,19 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/rivers", async (req, res) => {
+      const result = await riversCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/rivers/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await riversCollection.findOne(query);
+      res.send(result);
+    });
+
     // famous people get
 
     app.get("/famous_people", async (req, res) => {
@@ -89,6 +105,8 @@ async function run() {
       const result = await famousPeopleCollection.findOne(query);
       res.send(result);
     });
+
+    // rivers get
 
     //famous food get
 
