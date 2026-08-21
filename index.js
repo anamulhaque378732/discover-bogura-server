@@ -47,7 +47,13 @@ async function run() {
 
     const touristPlaceCollection = db.collection("tourist_place");
 
+    // river Collection
+
     const riversCollection = db.collection("rivers");
+
+    // Popular place
+
+    const popularPlaceCollection = db.collection("popular_place");
 
     // create user
 
@@ -123,6 +129,25 @@ async function run() {
       const query = { _id: new ObjectId(id) };
 
       const result = await famousFoodCollection.findOne(query);
+
+      res.send(result);
+    });
+
+    // popular place
+
+    app.get("/popular_place", async (req, res) => {
+      const result = await popularPlaceCollection.find().toArray();
+      res.send(result);
+    });
+
+    // load a specific Food
+
+    app.get("/popular_place/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: new ObjectId(id) };
+
+      const result = await popularPlaceCollection.findOne(query);
 
       res.send(result);
     });
