@@ -1,6 +1,6 @@
 const express = require("express");
 
-var cors = require("cors");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
@@ -35,7 +35,11 @@ async function run() {
 
     const usersCollection = db.collection("users");
 
-    // food collection
+    // thana collection
+
+    const thanaCollection = db.collection("thana");
+
+    //  food collection
 
     const famousFoodCollection = db.collection("famous_food");
 
@@ -62,6 +66,23 @@ async function run() {
       user.role = "user";
       user.createAt = new Date();
       const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // thana Collection get
+
+    app.get("/thana", async (req, res) => {
+      const result = await thanaCollection.find().toArray();
+
+      res.send(result);
+    });
+    app.get("/thana/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: new ObjectId(id) };
+
+      const result = await thanaCollection.findOne(query);
+
       res.send(result);
     });
 
