@@ -3,8 +3,20 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+// const { initializeApp, cert } = require("firebase-admin/app");
+// const { getAuth } = require("firebase-admin/auth");
+
 const app = express();
 const port = process.env.PORT || 5000;
+
+// const serviceAccount = require("./discover-bogura-firebase-adminsdk-fbsvc-0d2420932d.json");
+
+// // Firebase Admin
+// const firebaseApp = initializeApp({
+//   credential: cert(serviceAccount),
+// });
+
+// const auth = getAuth(firebaseApp);
 
 // middleware
 
@@ -12,7 +24,29 @@ app.use(express.json());
 
 app.use(cors());
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// const verifyFbToken = async (req, res, next) => {
+//   const token = req.headers.authorization;
+
+//   if (!token) {
+//     return res.status(401).send({ message: "unAuthorized access" });
+//   }
+
+//   try {
+//     const tokenId = token.split(" ")[1];
+
+//     const decoded = await auth.verifyIdToken(tokenId);
+
+//     console.log("decoded in the token", decoded);
+//   } catch (error) {
+//     return res.status(401).send({ message: "unauthorized assess" });
+//   }
+
+//   req.decoded_email = decoded.email;
+
+//   next();
+// };
+
+const { MongoClient, ServerApiVersion, ObjectId, Admin } = require("mongodb");
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.uzupc.mongodb.net/?appName=Cluster0`;
 
